@@ -39,7 +39,9 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:text="Vermelho">
+
         </TextView>
+        
         <SeekBar
             android:id="@+id/barraVermelho"
             android:layout_height="wrap_content"
