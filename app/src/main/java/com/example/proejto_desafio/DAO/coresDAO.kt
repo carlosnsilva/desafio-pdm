@@ -5,7 +5,7 @@ import com.example.proejto_desafio.bancoHelper.bancoHelper
 import android.content.ContentValues
 import com.example.proejto_desafio.modelo.Cor
 
-class corDAO {
+class coresDAO {
 
     private lateinit var banco: bancoHelper
 
