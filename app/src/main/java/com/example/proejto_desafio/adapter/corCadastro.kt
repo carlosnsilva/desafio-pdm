@@ -27,8 +27,8 @@ class corCadastro {
         this.corLista.removeAt(indice)
     }
 
-    fun quantos(){
-        this.corLista.count()
+    fun quantos(): Int{
+        return this.corLista.count()
     }
 
     fun getCorPosicao(indice: Int): Cor{

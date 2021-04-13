@@ -28,14 +28,17 @@ class corAdapter(private var cadastro: corCadastro, private var context: Context
         this.cadastro.deletar(indice)
     }
 
-    fun quantidade() {
+    override fun getCount(): Int {
         return this.cadastro.quantos()
     }
-        
-    fun buscaPorIndice(indice: Int): Cor{
-        return this.cadastro.getCorPosicao(indice)
+
+    override fun getItemId(indice: Int): Long {
+        return this.cadastro.getCorPosicao(indice).toString().toLong()
     }
 
+    override fun getItem(indice: Int): Any {
+        return this.cadastro.getCorPosicao(indice)
+    }
 
     override fun getView(position: Int, convertView: View?, parent: ViewGroup?): View {
         var myCor = this.cadastro.getCorPosicao(position)
@@ -43,7 +46,7 @@ class corAdapter(private var cadastro: corCadastro, private var context: Context
 
         if(convertView == null){
             var valor = context.getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater
-            valor.inflate(R.layout.listaDeCores, null)
+            valor.inflate(R.layout.listadecores, null)
 
 
         }
@@ -51,9 +54,9 @@ class corAdapter(private var cadastro: corCadastro, private var context: Context
             vw = convertView
         }
 
-        var id = vw.findViewById<ImageView>()
-        var nome = vw.findViewById<TextView>()
-        var codigo = vw.findViewById<TextView>()
+        var id = vw.findViewById<ImageView>(R.id.imagemCor)
+        var nome = vw.findViewById<TextView>(R.id.nomeCor)
+        var codigo = vw.findViewById<TextView>(R.id.codigoCor)
 
         id.setColorFilter(myCor.codigo)
         nome.text(myCor.nome)
