@@ -7,6 +7,8 @@ class corCadastro {
 
     private var corLista: ArrayList<Cor> = arrayListOf()
 
+
+
     fun getCor(): ArrayList<Cor>{
         return this.corLista
     }

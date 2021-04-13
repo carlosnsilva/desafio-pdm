@@ -44,23 +44,23 @@ class corAdapter(private var cadastro: corCadastro, private var context: Context
         var myCor = this.cadastro.getCorPosicao(position)
         var vw : View
 
-        if(convertView == null){
+        vw = if(convertView == null){
             var valor = context.getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater
             valor.inflate(R.layout.listadecores, null)
 
 
         }
         else{
-            vw = convertView
+            convertView
         }
 
-        var id = vw.findViewById<ImageView>(R.id.imagemCor)
+        var cor = vw.findViewById<ImageView>(R.id.imagemCor)
         var nome = vw.findViewById<TextView>(R.id.nomeCor)
         var codigo = vw.findViewById<TextView>(R.id.codigoCor)
 
-        id.setColorFilter(myCor.codigo)
-        nome.text(myCor.nome)
-        codigo.text(myCor.codigo)
+        cor.setColorFilter(myCor.codigo)
+        nome.setText(myCor.nome)
+        codigo.setText(myCor.codigo)
 
         return vw
     }
