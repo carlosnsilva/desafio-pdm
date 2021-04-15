@@ -4,6 +4,7 @@ import android.app.Activity
 import android.content.ClipData
 import android.content.ClipboardManager
 import android.content.Context
+import android.content.Intent
 import android.graphics.Color
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
@@ -79,6 +80,49 @@ class formActivity : AppCompatActivity() {
             var barra = getSystemService(Context.CLIPBOARD_SERVICE) as ClipboardManager
             var result = ClipData.newPlainText("resultado", corHexa)
             barra.setPrimaryClip(result)
+        }
+    }
+
+    inner class clickSalvar(): View.OnClickListener{
+        override fun onClick(v: View?) {
+            var nomeCor = this@formActivity.nome.text.toString()
+            var cor = Cor(nomeCor, corResultado)
+
+            var intent = Intent()
+            if(intent.hasExtra("cor") && intent.hasExtra("Lista_Cores")){
+                var novaIntent = (intent.getSerializableExtra("cor") as Cor).id
+                intent.putExtra("Lista_Cores", intent.getIntExtra("Lista_Cores", corResultado))
+                cor.id = novaIntent
+                this@formActivity.corDAO.update(cor)
+            }
+            else{
+                var idCor = this@formActivity.corDAO.insert(cor)
+                cor.id = idCor.toString().toInt()
+            }
+
+            intent.putExtra("cor", cor)
+            setResult(Activity.RESULT_OK,intent)
+            finish()
+        }
+    }
+
+    inner class corConfig(): SeekBar.OnSeekBarChangeListener{
+        override fun onProgressChanged(seekBar: SeekBar?, progress: Int, fromUser: Boolean) {
+            var azul = this@formActivity.corAzul.progress
+            var verde = this@formActivity.corVerde.progress
+            var vermelho = this@formActivity.corVermelho.progress
+
+            var corFormada: Int = Color.rgb(vermelho, verde, azul)
+            this@formActivity.corResultado = corFormada
+            this@formActivity.transformaHexadecimal(corFormada)
+        }
+
+        override fun onStartTrackingTouch(seekBar: SeekBar?) {
+            TODO("Not yet implemented")
+        }
+
+        override fun onStopTrackingTouch(seekBar: SeekBar?) {
+            TODO("Not yet implemented")
         }
     }
 }
