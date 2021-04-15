@@ -1,8 +1,13 @@
 package com.example.proejto_desafio
 
+import android.app.Activity
+import android.content.ClipData
+import android.content.ClipboardManager
+import android.content.Context
 import android.graphics.Color
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.view.View
 import android.widget.Button
 import android.widget.EditText
 import android.widget.SeekBar
@@ -42,10 +47,38 @@ class formActivity : AppCompatActivity() {
             this.corVermelho.progress = Color.red(cor1.codigo)
             this.corVerde.progress = Color.green(cor1.codigo)
             this.corResultado = cor1.codigo
-
-
+            transformaHexadecimal(cor1.codigo)
         }
 
+        this.corVerde.setOnSeekBarChangeListener(corConfig())
+        this.corVermelho.setOnSeekBarChangeListener(corConfig())
+        this.corAzul.setOnSeekBarChangeListener(corConfig())
 
+        this.botaoSalvar.setOnClickListener(clickSalvar())
+        this.botaoCancelar.setOnClickListener(clickCancelar())
+        this.botaoResultado.setOnClickListener(clickResultado())
+
+
+    }
+
+    fun transformaHexadecimal(corNumero: Int){
+        this.botaoResultado.setBackgroundColor(corNumero)
+        this.botaoResultado.text = Cor.toHex(corNumero)
+    }
+
+    inner class clickCancelar(): View.OnClickListener{
+        override fun onClick(v: View?) {
+            setResult(Activity.RESULT_CANCELED)
+            finish()
+        }
+    }
+
+    inner class clickResultado(): View.OnClickListener{
+        override fun onClick(v: View?) {
+            var corHexa = (v as Button).text
+            var barra = getSystemService(Context.CLIPBOARD_SERVICE) as ClipboardManager
+            var result = ClipData.newPlainText("resultado", corHexa)
+            barra.setPrimaryClip(result)
+        }
     }
 }
